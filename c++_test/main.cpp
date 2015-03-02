@@ -17,9 +17,14 @@ void init()
 {
     ifstream inputFile("/project/c/c++_test/data/beibao0.in");
     inputFile>>peopleTotal>>n;
-    for(int i=0; i<n; i++)
+    printf("peopleTotal: %d\nn: %d\n\n", peopleTotal, n);
+
+    for(int i=0; i<n; i++){
         inputFile>>peopleNeed[i]>>gold[i];
+        printf("peopleNeed[%d]: %d\ngold[%d]: %d\n", i, peopleNeed[i], i, gold[i]);
+    }
     inputFile.close();
+    printf("\n");
 
     for(int i=0; i<=peopleTotal; i++)
         for(int j=0; j<n; j++)
@@ -72,10 +77,13 @@ int GetMaxGold(int people, int mineNum)
 
 int main(int argc, char* argv[])
 {
+    int gold_amount;
+
     //初始化数据
     init();
     //输出给定peopleTotal个人和n个金矿能够获得的最大金子数，再次提醒编号从0开始，所以最后一个金矿编号为n-1
-    cout<<GetMaxGold(peopleTotal,n-1);
+    gold_amount = GetMaxGold(peopleTotal,n-1);
+    printf("gold_amount: %d\n", gold_amount);
     //system("pause");
     return 0;
 }
