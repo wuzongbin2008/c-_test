@@ -1,0 +1,5 @@
+# depslib dependency file v1.0
+1425284394 source:/project/c/c++_test/c++_test/main.cpp
+	<iostream>
+	<fstream>
+
