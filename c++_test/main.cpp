@@ -15,7 +15,7 @@ int maxGold[max_people][max_n];//maxGold[i][j]保存了i个人挖前j个金矿�
 //初始化数据
 void init()
 {
-    ifstream inputFile("beibao.in");
+    ifstream inputFile("/project/c/c++_test/data/beibao0.in");
     inputFile>>peopleTotal>>n;
     for(int i=0; i<n; i++)
         inputFile>>peopleNeed[i]>>gold[i];
