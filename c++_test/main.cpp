@@ -17,11 +17,11 @@ void init()
 {
     ifstream inputFile("/project/c/c++_test/data/beibao0.in");
     inputFile>>peopleTotal>>n;
-    printf("peopleTotal: %d\nn: %d\n\n", peopleTotal, n);
+    //printf("peopleTotal: %d\tn: %d\n\n", peopleTotal, n);
 
     for(int i=0; i<n; i++){
         inputFile>>peopleNeed[i]>>gold[i];
-        printf("peopleNeed[%d]: %d\ngold[%d]: %d\n", i, peopleNeed[i], i, gold[i]);
+        //printf("peopleNeed[%d]: %d\tgold[%d]: %d\n", i, peopleNeed[i], i, gold[i]);
     }
     inputFile.close();
     printf("\n");
@@ -42,10 +42,13 @@ int GetMaxGold(int people, int mineNum)
     if(maxGold[people][mineNum] != -1)
     {
         //获得保存起来的值
+        printf("获得保存起来的值\n");
         retMaxGold = maxGold[people][mineNum];
+        printf("!= -1: %d\n", retMaxGold);
     }
     else if(mineNum == 0)//如果仅有一个金矿时 [对应动态规划中的“边界”]
     {
+        printf("mineNum == 0\n");
         //当给出的人数足够开采这座金矿
         if(people >= peopleNeed[mineNum])
         {
@@ -63,10 +66,12 @@ int GetMaxGold(int people, int mineNum)
         //考虑开采与不开采两种情况，取最大值
         retMaxGold = max(GetMaxGold(people - peopleNeed[mineNum],mineNum -1) + gold[mineNum],
                                         GetMaxGold(people,mineNum - 1));
+        printf("mineNum: %d\tretMaxGold: %d\n", mineNum, retMaxGold);
     }
     else//否则给出的人不够开采这座金矿 [对应动态规划中的“最优子结构”]
     {
         //仅考虑不开采的情况
+        printf("仅考虑不开采的情况\n");
         retMaxGold  = GetMaxGold(people,mineNum - 1);
     }
 
@@ -81,9 +86,11 @@ int main(int argc, char* argv[])
 
     //初始化数据
     init();
+
     //输出给定peopleTotal个人和n个金矿能够获得的最大金子数，再次提醒编号从0开始，所以最后一个金矿编号为n-1
     gold_amount = GetMaxGold(peopleTotal,n-1);
-    printf("gold_amount: %d\n", gold_amount);
+    printf("\ngold_amount: %d\n", gold_amount);
     //system("pause");
+
     return 0;
 }
