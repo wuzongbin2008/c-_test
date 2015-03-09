@@ -37,13 +37,14 @@ int GetMaxGold(int people, int mineNum)
 {
     //申明返回的最大金子数
     int retMaxGold;
+    printf("people : %d\tmineNum: %d\n", people, mineNum);
 
     //如果这个问题曾经计算过  [对应动态规划中的“做备忘录”]
     if(maxGold[people][mineNum] != -1)
     {
         //获得保存起来的值
         retMaxGold = maxGold[people][mineNum];
-        printf("获得保存起来的值\tretMaxGold: %d\n", retMaxGold);
+        printf("获得保存起来的值\tmaxGold[%d][%d]: %d\n", people, mineNum, retMaxGold);
     }
     else if(mineNum == 0)//如果仅有一个金矿时 [对应动态规划中的“边界”]
     {
@@ -62,7 +63,6 @@ int GetMaxGold(int people, int mineNum)
     }
     else if(people >= peopleNeed[mineNum])//如果给出的人够开采这座金矿 [对应动态规划中的“最优子结构”]
     {
-        printf("people : %d\tmineNum: %d\n", people, mineNum);
         //考虑开采与不开采两种情况，取最大值
         retMaxGold = max(GetMaxGold(people - peopleNeed[mineNum], mineNum - 1) + gold[mineNum],
                                         GetMaxGold(people, mineNum - 1));
@@ -72,11 +72,11 @@ int GetMaxGold(int people, int mineNum)
     {
         //仅考虑不开采的情况
         retMaxGold  = GetMaxGold(people,mineNum - 1);
-        printf("仅考虑不开采的情况\t retMaxGold: %d\n", retMaxGold);
+        printf("仅考虑不开采的情况\tpeople: %d\tmineNum: %d\tretMaxGold: %d\n", people, mineNum, retMaxGold);
     }
 
     //做备忘录
-    printf("maxGold[%d][%d] : %d\n\n", people, mineNum, retMaxGold);
+    printf("final maxGold[%d][%d] : %d\n\n", people, mineNum, retMaxGold);
     maxGold[people][mineNum] = retMaxGold;
     return retMaxGold;
 }
