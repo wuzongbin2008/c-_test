@@ -15,7 +15,7 @@ int maxGold[max_people][max_n];//maxGold[i][j]保存了i个人挖前j个金矿�
 //初始化数据
 void init()
 {
-    ifstream inputFile("/project/c/c++_test/data/beibao0.in");
+    ifstream inputFile("/project/c/c++_test/data/beibao1.in");
     inputFile>>peopleTotal>>n;
     //printf("peopleTotal: %d\tn: %d\n\n", peopleTotal, n);
 
@@ -24,7 +24,7 @@ void init()
         //printf("peopleNeed[%d]: %d\tgold[%d]: %d\n", i, peopleNeed[i], i, gold[i]);
     }
     inputFile.close();
-    printf("\n");
+    //printf("\n");
 
     for(int i=0; i<=peopleTotal; i++)
         for(int j=0; j<n; j++)
@@ -42,13 +42,11 @@ int GetMaxGold(int people, int mineNum)
     if(maxGold[people][mineNum] != -1)
     {
         //获得保存起来的值
-        printf("获得保存起来的值\n");
         retMaxGold = maxGold[people][mineNum];
-        printf("!= -1: %d\n", retMaxGold);
+        printf("获得保存起来的值\tretMaxGold: %d\n", retMaxGold);
     }
     else if(mineNum == 0)//如果仅有一个金矿时 [对应动态规划中的“边界”]
     {
-        printf("mineNum == 0\n");
         //当给出的人数足够开采这座金矿
         if(people >= peopleNeed[mineNum])
         {
@@ -60,22 +58,25 @@ int GetMaxGold(int people, int mineNum)
             //得到的最大值为0个金子
             retMaxGold = 0;
         }
+        printf("people : %d\tpeopleNeed[%d]: %d\tretMaxGold: %d\n", people, mineNum, peopleNeed[mineNum], retMaxGold);
     }
     else if(people >= peopleNeed[mineNum])//如果给出的人够开采这座金矿 [对应动态规划中的“最优子结构”]
     {
+        printf("people : %d\tmineNum: %d\n", people, mineNum);
         //考虑开采与不开采两种情况，取最大值
-        retMaxGold = max(GetMaxGold(people - peopleNeed[mineNum],mineNum -1) + gold[mineNum],
-                                        GetMaxGold(people,mineNum - 1));
-        printf("mineNum: %d\tretMaxGold: %d\n", mineNum, retMaxGold);
+        retMaxGold = max(GetMaxGold(people - peopleNeed[mineNum], mineNum - 1) + gold[mineNum],
+                                        GetMaxGold(people, mineNum - 1));
+        printf("tmp retMaxGold: %d\n", retMaxGold);
     }
     else//否则给出的人不够开采这座金矿 [对应动态规划中的“最优子结构”]
     {
         //仅考虑不开采的情况
-        printf("仅考虑不开采的情况\n");
         retMaxGold  = GetMaxGold(people,mineNum - 1);
+        printf("仅考虑不开采的情况\t retMaxGold: %d\n", retMaxGold);
     }
 
     //做备忘录
+    printf("maxGold[%d][%d] : %d\n\n", people, mineNum, retMaxGold);
     maxGold[people][mineNum] = retMaxGold;
     return retMaxGold;
 }
